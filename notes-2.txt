@@ -1,0 +1,60 @@
+# from http.cookies import Morsel, SimpleCookie
+
+
+class MainHandler():
+    def _set_data(self):
+        self.set_cookie('tecoroute-proxy', b64encode(zlib.compress(dumps(self._data).encode())))
+    
+    @gen.coroutine
+    def _method(self):
+        
+        
+        tr_cookie = SimpleCookie()
+        for header in self._data.get('tr-cookie', {}).values():
+            tr_cookie.load(header)
+        login = False
+        login_attempts = self._data.get('login-attempts', 0)
+        yield gen.sleep(login_attempts / 10)
+        
+        """
+                if self.get_argument('login', False):
+                    login = True
+                    self._data['login-attempts'] = 0
+                    self._data['user'] = self.get_argument('user')
+                    self._data['password'] = self.get_argument('password')
+                    self._data['plc'] = self.get_argument('plc')
+                else:
+                    self._set_data()
+                    self.redirect('/')
+                    return
+            else:
+                self._set_data()
+                self.send_error(405)
+                return
+        """
+        
+        if login or self.request.uri == '/TR_LOGIN.XML':
+            if not login:
+                if login_attempts < 10:
+                    self._data['login-attempts'] = login_attempts + 1
+                else:
+                    self._set_data()
+                    self.send_error(503)
+                    return
+            login = False    
+            tr_method = 'POST'
+            tr_uri = '/TR_LOGIN.XML'
+            tr_body = urlencode({'USER': self._data.get('user', ''), 'PASS': sha1(((tr_cookie.get('RoutePLC', Morsel()).value or '') + self._data.get('password', '')).encode()).hexdigest(), 'PLC': self._data.get('plc', '')})
+        else:
+            tr_method = self.request.method
+            tr_uri = self.request.uri
+            tr_body = self.request.body or None
+        
+
+
+        for key, morsel in tr_cookie.items():
+            # Reformat back the previously parsed header value and set {cookie name: header value} to tr-cookie.
+            self._data.setdefault('tr-cookie', {})[key] = morsel.output(header='')[1:]
+        self._data['login-attempts'] = 0
+        self._set_data()
+        self.write(tr_response.body)

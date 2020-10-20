@@ -1,0 +1,59 @@
+            } else {
+                
+                NSString *message1 = [localWebView stringByEvaluatingJavaScriptFromString:@"document.getElementById('message1').innerHTML"];
+                NSString *message2 = [localWebView stringByEvaluatingJavaScriptFromString:@"document.getElementById('message2').innerHTML"];
+                NSString *message3 = [localWebView stringByEvaluatingJavaScriptFromString:@"document.getElementById('message3').innerHTML"];
+                NSString *message4 = [localWebView stringByEvaluatingJavaScriptFromString:@"document.getElementById('message4').innerHTML"];
+                NSString *message5 = [localWebView stringByEvaluatingJavaScriptFromString:@"document.getElementById('message5').innerHTML"];
+                
+                if([self checkMessageOnTecorouteTR_Login:message1]
+                   || [self checkMessageOnTecorouteTR_Login:message3]
+                   || [self checkMessageOnTecorouteTR_Login:message5]) {
+                    NSString *loadUserJS = [NSString stringWithFormat:@"document.getElementById('USER').value='%@'", [menuCellObj getTunerOnlineUsername] ];
+                    NSString *loadPasswordJS = [NSString stringWithFormat:@"document.getElementById('PASS').value='%@'", [menuCellObj getTunerOnlinePassword]];
+                    NSString *loadPlcJS = [NSString stringWithFormat:@"document.getElementById('PLC').value='%@'", [menuCellObj getTunerOnlinePlcName]];
+                
+                    [localWebView stringByEvaluatingJavaScriptFromString:loadUserJS];
+                    [localWebView stringByEvaluatingJavaScriptFromString:loadPasswordJS];
+                    [localWebView stringByEvaluatingJavaScriptFromString:loadPlcJS];
+                
+                    [localWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('input')[5].click();"];
+                    tunerOnlineIndication = YES;
+                } else if([self checkMessageOnTecorouteTR_Login:message2] || [self checkMessageOnTecorouteTR_Login:message4]) {
+                    [self setInactiveIndicationForButton:tunerButton];
+                    [spinnerView hideView];
+                    tunerOnlineIndication = NO;
+                    [self showAlertViewWithTitle:NSLocalizedString(@"service_not_available_other_internal_error",nil) message:NSLocalizedString(@"service_not_available_other_internal_error_message",nil)];
+                }
+
+
+
+
+
+
+
+
+
+</xsl:template>
+<xsl:template match='USER'>
+  <input placeholder="User name" type="text" class="inptext border" id="USER" name="USER" value="{@VALUE}" />
+</xsl:template>
+
+<xsl:template match='PASS'>
+  <input placeholder="Password" type="password" class="inptext border" id="PASS" name="PASS" value="{@VALUE}" />
+</xsl:template>
+
+<xsl:template match='PLC'>
+  <input placeholder="Plc" type="text" class="inptext border" id="PLC" name="PLC" value="{@VALUE}" />
+</xsl:template>
+
+<xsl:template match='ACER'>
+  <xsl:if test="@VALUE = '0'"><span id="message1" class="cblue">Welcome and login, please.</span></xsl:if>
+  <xsl:if test="@VALUE = '1'"><span id="message2">Incorrect user name or password. Try it again.</span></xsl:if>
+  <xsl:if test="@VALUE = '2'"><span id="message3">You've been logged out. You can login again.</span></xsl:if>
+  <xsl:if test="@VALUE = '3'"><span id="message4">Cannot find any login files.</span></xsl:if>
+  <xsl:if test="@VALUE = '4'"><span id="message5">Time is expired. Try it again.</span></xsl:if>
+  <xsl:if test="@VALUE = '5'"><span id="message6">Used link is not valid.</span></xsl:if>
+  <xsl:if test="@VALUE = '6'"><span id="message7">Link is not valid, it was probably used from another device. Link was removed.</span></xsl:if>
+</xsl:template>
+</xsl:stylesheet>
