@@ -1,0 +1,25 @@
+ignore: |
+  /chart/templates/
+rules:
+  braces:
+    forbid: non-empty
+  brackets:
+    forbid: non-empty
+  colons: enable
+  comments: enable
+  comments-indentation: enable
+  empty-lines:
+    max: 1
+  empty-values: enable
+  hyphens: enable
+  indentation:
+    spaces: 2
+    indent-sequences: false
+  key-duplicates: enable
+  new-line-at-end-of-file: enable
+  new-lines: enable
+  quoted-strings:
+    quote-type: double
+    required: only-when-needed
+  trailing-spaces: enable
+  truthy: enable

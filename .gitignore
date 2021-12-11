@@ -1,0 +1,11 @@
+# Python
+*.py[cod]
+*$py.class
+__pycache__/
+
+# Python package distribution
+/dist/
+/src/*.egg-info/
+
+# mypy
+/.mypy_cache/

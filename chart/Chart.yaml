@@ -1,0 +1,18 @@
+apiVersion: v2
+name: tecoroute-proxy
+version: 0.3.0
+kubeVersion: ">= 1.14.0-0"
+description: Proxy for easy authentication to the TecoRoute service.
+type: application
+keywords:
+- authentication
+- proxy
+- tecoroute
+home: https://opensource.cze.tech/tecoroute-proxy
+sources:
+- https://github.com/czetech/tecoroute-proxy
+maintainers:
+- name: Petr Czepiec
+  email: petr@czepiec.me
+  url: https://czepiec.me/
+appVersion: 0.3.0

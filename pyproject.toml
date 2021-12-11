@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+target_version = ['py38', 'py39', 'py310']
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+warn-unused-configs = true
+disallow-any-generics = true
+disallow-subclassing-any = true
+disallow-untyped-calls = true
+disallow-untyped-defs = true
+disallow-incomplete-defs = true
+check-untyped-defs = true
+disallow-untyped-decorators = true
+no-implicit-optional = true
+warn-redundant-casts = true
+warn-return-any = true
+no-implicit-reexport = true
+strict-equality = true

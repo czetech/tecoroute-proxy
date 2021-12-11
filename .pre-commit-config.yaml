@@ -1,0 +1,63 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.0.1
+  hooks:
+  - id: check-added-large-files
+    args:
+    - --maxkb=100
+  - id: check-case-conflict
+  - id: check-executables-have-shebangs
+  - id: check-merge-conflict
+  - id: check-toml
+  - id: end-of-file-fixer
+  - id: fix-byte-order-marker
+  - id: fix-encoding-pragma
+    args:
+    - --remove
+  - id: mixed-line-ending
+    args:
+    - --fix=lf
+  - id: trailing-whitespace
+- repo: https://github.com/pre-commit/mirrors-prettier
+  rev: v2.4.1
+  hooks:
+  - id: prettier
+    exclude: |
+      (?x)(
+        ^chart\/README\.md$
+      )
+    types_or:
+    - markdown
+- repo: https://github.com/psf/black
+  rev: 21.11b0
+  hooks:
+  - id: black
+- repo: https://github.com/PyCQA/isort
+  rev: 5.10.1
+  hooks:
+  - id: isort
+- repo: https://github.com/adrienverge/yamllint
+  rev: v1.26.3
+  hooks:
+  - id: yamllint
+    args:
+    - --config-file=.yamllintrc.yaml
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 4.0.1
+  hooks:
+  - id: flake8
+    additional_dependencies:
+    - flake8-bugbear
+    - flake8-docstrings
+    - pep8-naming
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v0.910
+  hooks:
+  - id: mypy
+- repo: https://github.com/norwoodj/helm-docs
+  rev: 2a8b9ccc7fb024ba9c792b672b43eaa58f4c35d0
+  hooks:
+  - id: helm-docs-built
+    args:
+    - --chart-search-root=chart
+    - --sort-values-order=file
