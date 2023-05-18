@@ -1,0 +1,5 @@
+# Git repository
+/.git/
+
+# Helm chart
+/chart/

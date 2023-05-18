@@ -1,0 +1,7 @@
+You have successfully installed {{ title .Chart.Name }}.
+{{- if .Values.ingress.enabled }}
+The application uses the following URLs:
+{{- range $host := .Values.ingress.hosts }}
+  - http{{ if $.Values.ingress.tls }}s{{ end }}://{{ . }}{{ $.Values.ingress.path }}
+{{- end }}
+{{- end }}

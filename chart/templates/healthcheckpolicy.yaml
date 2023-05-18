@@ -1,0 +1,14 @@
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: {{ include "tecoroute-proxy.fullname" . }}
+spec:
+  default:
+    config:
+      type: HTTP
+      httpHealthCheck:
+        requestPath: /TR_PROXY
+  targetRef:
+    group: ""
+    kind: Service
+    name: {{ include "tecoroute-proxy.fullname" . }}-http
